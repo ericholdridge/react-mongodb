@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import Axios from "axios";
 import "./App.css";
 import HeaderLoggedOut from "./components/HeaderLoggedOut";
+import HeaderLoggedIn from "./components/HeaderLoggedIn";
 
 function App() {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("complexappToken")));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post("http://localhost:8080/register", {
+      await Axios.post("http://localhost:5001/register", {
         username,
         email,
         password,
@@ -31,7 +33,7 @@ function App() {
               ComplexApp
             </a>
           </h4>
-          <HeaderLoggedOut />
+          {loggedIn ? <HeaderLoggedIn setLoggedIn={setLoggedIn} /> : <HeaderLoggedOut setLoggedIn={setLoggedIn}/>}
         </div>
       </header>
 

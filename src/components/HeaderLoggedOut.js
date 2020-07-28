@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import Axios from "axios";
 
-const HeaderLoggedOut = () => {
+const HeaderLoggedOut = ({setLoggedIn}) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await Axios.post("http://localhost:8080/login", {
+      const response = await Axios.post("http://localhost:5001/login", {
         username,
         password,
       });
+      // If we get data from the post
       if (response.data) {
+        // localStorage.setItem("complexappToken", response.data.token);
+        // localStorage.setItem("complexappUsername", response.data.username);
+        // localStorage.setItem("complexappAvatar", response.data.avatar);
         console.log(response.data);
+        setLoggedIn(true);
       }
       else {
         console.log("Incorrect username or password")
